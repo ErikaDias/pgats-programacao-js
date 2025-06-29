@@ -1,0 +1,35 @@
+# CI de Nivel 01 - Disparo manial a partir de 1 cliquei
+
+# nome do nosso 'pipeline'
+name: 'Execução Manual'
+
+# regras de disparo (gatilhos/triggers)
+# gatilho de execução manual = 'workflow_dispatch'
+
+on:
+  workflow_dispatch:
+
+# jobs que serão executados
+jobs:
+  e2e-tests:
+
+    # ambiente onde o job será executado
+    runs-on: ubuntu-latest
+
+    # passos que serão executados no job
+    steps:
+      # clone do projeto
+      - uses: actions/checkout@v4
+
+      # instalação do Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Instalando dependências do projeto
+      - name: Instalando dependências
+        run: yarn install
+
+      # Executa os testes unitários com Mocha
+      - name: Executando testes unitários
+        run: npx mocha testes/trabalho-final.js
